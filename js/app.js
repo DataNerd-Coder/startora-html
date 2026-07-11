@@ -1,19 +1,30 @@
 /* STARTORA — Shared JS (multi-page) */
 
 // Navigation
-function nav(url) { window.location.href = url; }
+function nav(url) { 
+  console.log('nav called with:', url);
+  window.location.href = url; 
+}
 
 // Attach nav handlers to all elements with onclick="nav(...)" 
 document.addEventListener('click', function(e) {
-  var navUrl = e.target.getAttribute('onclick');
-  if (navUrl && navUrl.includes('nav(')) {
-    var match = navUrl.match(/nav\('([^']+)'\)/);
-    if (match && match[1]) {
-      window.location.href = match[1];
-      return false;
+  var el = e.target;
+  // Check the clicked element and all parent elements
+  while (el && el !== document) {
+    var navUrl = el.getAttribute('onclick');
+    if (navUrl && navUrl.includes('nav(')) {
+      var match = navUrl.match(/nav\('([^']+)'\)/);
+      if (match && match[1]) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Navigation triggered to:', match[1]);
+        window.location.href = match[1];
+        return false;
+      }
     }
+    el = el.parentElement;
   }
-});
+}, true); // Use capture phase
 
 // Tabbar active state based on current URL
 document.addEventListener('DOMContentLoaded', function() {
