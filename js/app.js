@@ -3,6 +3,18 @@
 // Navigation
 function nav(url) { window.location.href = url; }
 
+// Attach nav handlers to all elements with onclick="nav(...)" 
+document.addEventListener('click', function(e) {
+  var navUrl = e.target.getAttribute('onclick');
+  if (navUrl && navUrl.includes('nav(')) {
+    var match = navUrl.match(/nav\('([^']+)'\)/);
+    if (match && match[1]) {
+      window.location.href = match[1];
+      return false;
+    }
+  }
+});
+
 // Tabbar active state based on current URL
 document.addEventListener('DOMContentLoaded', function() {
   var path = window.location.pathname;
