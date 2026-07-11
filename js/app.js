@@ -26,6 +26,16 @@ document.addEventListener('click', function(e) {
   }
 }, true); // Use capture phase
 
+// Auth view switcher (global function)
+window.switchAuthView = function(view) {
+  document.querySelectorAll('.auth-toggle div').forEach(function(d) { d.classList.remove('on'); });
+  var tab = document.querySelector('[data-authview="' + view + '"]');
+  if (tab) tab.classList.add('on');
+  document.querySelectorAll('.auth-view').forEach(function(v) { v.classList.remove('active'); });
+  var t = document.getElementById('auth-' + view);
+  if (t) t.classList.add('active');
+};
+
 // Tabbar active state based on current URL
 document.addEventListener('DOMContentLoaded', function() {
   var path = window.location.pathname;
@@ -50,15 +60,6 @@ document.addEventListener('DOMContentLoaded', function() {
   setInterval(triggerAskMe, 9000);
 
   // Auth toggle
-  var switchAuthView = function(view) {
-    document.querySelectorAll('.auth-toggle div').forEach(function(d) { d.classList.remove('on'); });
-    var tab = document.querySelector('[data-authview="' + view + '"]');
-    if (tab) tab.classList.add('on');
-    document.querySelectorAll('.auth-view').forEach(function(v) { v.classList.remove('active'); });
-    var t = document.getElementById('auth-' + view);
-    if (t) t.classList.add('active');
-  };
-  
   document.querySelectorAll('.auth-toggle div[data-authview]').forEach(function(opt) {
     opt.style.cursor = 'pointer';
     opt.addEventListener('click', function(e) {
