@@ -84,6 +84,14 @@
 <script src="/js/app.js"></script>
 <script>
 function nav(url) { window.location.href = url; }
+window.switchAuthView = function(view) {
+  document.querySelectorAll('.auth-toggle div').forEach(function(d) { d.classList.remove('on'); });
+  var tab = document.querySelector('[data-authview="' + view + '"]');
+  if (tab) tab.classList.add('on');
+  document.querySelectorAll('.auth-view').forEach(function(v) { v.classList.remove('active'); });
+  var t = document.getElementById('auth-' + view);
+  if (t) t.classList.add('active');
+};
 </script>
 </body>
 </html>
