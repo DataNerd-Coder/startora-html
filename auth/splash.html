@@ -33,8 +33,8 @@
           </div>
           <div class="auth-card">
             <div class="auth-toggle">
-              <div class="on" data-authview="login">Sign in</div>
-              <div data-authview="signup">Create account</div>
+              <div class="on" data-authview="login" onclick="switchAuthView('login')" style="cursor:pointer;">Sign in</div>
+              <div data-authview="signup" onclick="switchAuthView('signup')" style="cursor:pointer;">Create account</div>
             </div>
 
             <!-- SIGN IN -->
@@ -51,7 +51,7 @@
               <button class="btn btn-primary" data-screen="dashboard" onclick="nav('/app/dashboard.html')">Sign in</button>
               <div class="auth-divider">or</div>
               <button class="btn-google"><div class="g-logo"></div> Continue with Google</button>
-              <div class="auth-foot">No account? <span data-authview-switch="signup">Create one free</span></div>
+              <div class="auth-foot">No account? <span data-authview-switch="signup" onclick="switchAuthView('signup')" style="cursor:pointer;">Create one free</span></div>
             </div>
 
             <!-- CREATE ACCOUNT -->
