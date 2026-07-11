@@ -112,6 +112,13 @@
 <script src="/js/app.js"></script>
 <script>
 function nav(url) { window.location.href = url; }
+window.switchNotifTab = function(el, tab) {
+  document.querySelectorAll('.notif-tab').forEach(function(t) { t.classList.remove('on'); });
+  el.classList.add('on');
+  document.querySelectorAll('.notif-view').forEach(function(v) { v.classList.remove('active'); });
+  var view = document.getElementById('notif-' + tab);
+  if (view) view.classList.add('active');
+};
 </script>
 </body>
 </html>
