@@ -50,13 +50,48 @@ document.addEventListener('DOMContentLoaded', function() {
   setInterval(triggerAskMe, 9000);
 
   // Auth toggle
+  var switchAuthView = function(view) {
+    document.querySelectorAll('.auth-toggle div').forEach(function(d) { d.classList.remove('on'); });
+    var tab = document.querySelector('[data-authview="' + view + '"]');
+    if (tab) tab.classList.add('on');
+    document.querySelectorAll('.auth-view').forEach(function(v) { v.classList.remove('active'); });
+    var t = document.getElementById('auth-' + view);
+    if (t) t.classList.add('active');
+  };
+  
   document.querySelectorAll('.auth-toggle div[data-authview]').forEach(function(opt) {
-    opt.addEventListener('click', function() {
-      document.querySelectorAll('.auth-toggle div').forEach(function(d) { d.classList.remove('on'); });
-      opt.classList.add('on');
-      document.querySelectorAll('.auth-view').forEach(function(v) { v.classList.remove('active'); });
-      var t = document.getElementById('auth-' + opt.dataset.authview);
-      if (t) t.classList.add('active');
+    opt.style.cursor = 'pointer';
+    opt.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      switchAuthView(opt.dataset.authview);
+    });
+  });
+  
+  // Auth switch links (e.g., "Create one free", "Sign in")
+  document.querySelectorAll('[data-authview-switch]').forEach(function(link) {
+    link.style.cursor = 'pointer';
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      switchAuthView(link.dataset.authviewSwitch);
+    });
+  });
+
+  // Tabbar navigation
+  document.querySelectorAll('.tabbar div[data-tab]').forEach(function(tab) {
+    tab.style.cursor = 'pointer';
+    tab.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var file = tab.dataset.tab;
+      var urls = {
+        'dashboard': '/app/dashboard.html',
+        'filing': '/app/filing-status.html',
+        'docs': '/app/docs.html',
+        'services': '/app/services.html'
+      };
+      if (urls[file]) window.location.href = urls[file];
     });
   });
 
