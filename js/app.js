@@ -105,3 +105,125 @@ function getCachedElement(selector) {
   }
   return cachedElements[selector];
 }
+
+// Modal management
+window.openModal = function(modalId) {
+  var modal = document.getElementById(modalId);
+  if (modal) {
+    modal.classList.add('active');
+    modal.style.display = 'flex';
+  }
+};
+
+window.closeModal = function(modalId) {
+  var modal = document.getElementById(modalId);
+  if (modal) {
+    modal.classList.remove('active');
+    modal.style.display = 'none';
+  }
+};
+
+// Initialize modal event listeners
+document.addEventListener('DOMContentLoaded', function() {
+  // Open modal buttons
+  var openButtons = document.querySelectorAll('[data-open-modal]');
+  openButtons.forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      var modalId = this.getAttribute('data-open-modal');
+      openModal(modalId);
+    });
+  });
+  
+  // Close modal buttons
+  var closeButtons = document.querySelectorAll('[data-close-modal]');
+  closeButtons.forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      var modalId = this.getAttribute('data-close-modal');
+      closeModal(modalId);
+    });
+  });
+  
+  // Close modal when clicking overlay
+  var modals = document.querySelectorAll('.modal-overlay');
+  modals.forEach(function(modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal(this.id);
+      }
+    });
+  });
+});
+
+// Add shareholder function
+window.addShareholder = function() {
+  var name = document.getElementById('sh-new-name');
+  var addr = document.getElementById('sh-new-addr');
+  var nin = document.getElementById('sh-new-nin');
+  var pct = document.getElementById('sh-new-pct');
+  
+  // Validate required fields
+  if (!name || !name.value.trim()) {
+    alert('Please enter shareholder name');
+    return;
+  }
+  if (!addr || !addr.value.trim()) {
+    alert('Please enter residential address');
+    return;
+  }
+  if (!nin || !nin.value.trim()) {
+    alert('Please enter NIN or BVN');
+    return;
+  }
+  if (!pct || !pct.value || parseInt(pct.value) < 1 || parseInt(pct.value) > 99) {
+    alert('Please enter valid ownership percentage (1-99%)');
+    return;
+  }
+  
+  // Create shareholder card
+  var initials = name.value.split(' ').map(function(n) { return n[0]; }).join('').toUpperCase().slice(0, 2);
+  var card = document.createElement('div');
+  card.className = 'sh-card';
+  card.innerHTML = '<div class="sh-card-head"><div class="sh-card-info"><div class="sh-avatar">' + initials + '</div><div><div class="sh-name">' + name.value + '</div><div class="sh-role">Shareholder</div></div></div><div class="sh-pct">' + pct.value + '%</div></div><div class="sh-detail">NIN: ••• •••• ' + nin.value.slice(-3) + ' · ' + addr.value + '</div><button class="sh-edit" data-open-modal="sh-modal">Edit details</button>';
+  
+  // Add to list
+  var list = document.getElementById('sh-list');
+  if (list) {
+    list.insertBefore(card, list.querySelector('.add-strip'));
+  }
+  
+  // Clear form and close modal
+  if (name) name.value = '';
+  if (addr) addr.value = '';
+  if (nin) nin.value = '';
+  if (pct) pct.value = '';
+  closeModal('sh-modal');
+};
+
+// Add witness function
+window.addWitness = function() {
+  var name = document.getElementById('wit-new-name');
+  
+  // Validate required fields
+  if (!name || !name.value.trim()) {
+    alert('Please enter witness name');
+    return;
+  }
+  
+  // Create witness card
+  var initials = name.value.split(' ').map(function(n) { return n[0]; }).join('').toUpperCase().slice(0, 2);
+  var card = document.createElement('div');
+  card.className = 'sh-card';
+  card.innerHTML = '<div class="sh-card-head"><div class="sh-card-info"><div class="sh-avatar">' + initials + '</div><div><div class="sh-name">' + name.value + '</div><div class="sh-role">Witness</div></div></div></div><button class="sh-edit" data-open-modal="wit-modal">Edit details</button>';
+  
+  // Add to list
+  var list = document.getElementById('wit-list');
+  if (list) {
+    list.insertBefore(card, list.querySelector('.add-strip'));
+  }
+  
+  // Clear form and close modal
+  if (name) name.value = '';
+  closeModal('wit-modal');
+};
