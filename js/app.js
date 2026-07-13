@@ -110,16 +110,14 @@ function getCachedElement(selector) {
 window.openModal = function(modalId) {
   var modal = document.getElementById(modalId);
   if (modal) {
-    modal.classList.add('active');
-    modal.style.display = 'flex';
+    modal.classList.add('open');
   }
 };
 
 window.closeModal = function(modalId) {
   var modal = document.getElementById(modalId);
   if (modal) {
-    modal.classList.remove('active');
-    modal.style.display = 'none';
+    modal.classList.remove('open');
   }
 };
 
