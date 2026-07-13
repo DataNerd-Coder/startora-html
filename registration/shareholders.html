@@ -39,9 +39,9 @@
                 <div class="sh-pct">70%</div>
               </div>
               <div class="sh-detail">NIN: ••• •••• 901 &nbsp;·&nbsp; 12 Adeniyi Jones Ave, Lagos</div>
-              <button class="sh-edit" data-open-modal="sh-modal">Edit details</button>
+              <button class="sh-edit" data-open-modal="sh-modal" onclick="openModal('sh-modal')">Edit details</button>
             </div>
-            <button class="add-strip" data-open-modal="sh-modal">
+            <button class="add-strip" data-open-modal="sh-modal" onclick="openModal('sh-modal')">
               <div class="add-strip-icon">+</div> Add another shareholder
             </button>
           </div>
@@ -54,7 +54,7 @@
             <div class="modal-handle"></div>
             <div class="modal-head">
               <div class="modal-title">Add Shareholder</div>
-              <button class="modal-close" data-close-modal="sh-modal">✕</button>
+              <button class="modal-close" data-close-modal="sh-modal" onclick="closeModal('sh-modal')">✕</button>
             </div>
             <div class="field-group"><label class="field-label">Full legal name</label><input id="sh-new-name" class="field" placeholder="e.g. Emeka Okafor" style="margin-bottom:0"></div>
             <div class="field-group"><label class="field-label">Email address</label><input class="field" placeholder="emeka@email.com" style="margin-bottom:0"></div>
